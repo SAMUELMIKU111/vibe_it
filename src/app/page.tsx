@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 
 interface Listing {
@@ -41,8 +42,9 @@ export default async function Home() {
         {listings && listings.length > 0 && (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {(listings as Listing[]).map((listing) => (
-              <div
+              <Link
                 key={listing.id}
+                href={`/listing/${listing.id}`}
                 className="group rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6 shadow-sm transition-all duration-200 hover:shadow-md hover:border-zinc-300 dark:hover:border-zinc-700 hover:-translate-y-0.5"
               >
                 <div className="mb-4">
@@ -83,7 +85,7 @@ export default async function Home() {
                     {' '}/ night
                   </span>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}
