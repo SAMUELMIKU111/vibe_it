@@ -10,9 +10,21 @@ interface Listing {
 }
 
 export default async function Home() {
-  const { data: listings, error } = await supabase
-    .from('listings')
-    .select('*')
+  let listings: Listing[] | null = null
+  let error: any = null
+
+  try {
+    const { data, error: queryError } = await supabase
+      .from('listings')
+      .select('*')
+
+    console.log("SUPABASE ERROR:", queryError)
+    listings = data
+    error = queryError
+  } catch (e) {
+    console.error("FULL ERROR:", e)
+    throw e
+  }
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 py-16 px-4 font-sans">
